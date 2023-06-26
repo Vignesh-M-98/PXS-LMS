@@ -70,24 +70,9 @@ export default function AuthLoginForm() {
         {!!errors.afterSubmit && <Alert severity="error">{errors.afterSubmit.message}</Alert>}
 
         <RHFTextField name="email" label="Email address" />
-
-        <RHFTextField
-          name="password"
-          label="Password"
-          type={showPassword ? 'text' : 'password'}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
-                  <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
-        />
       </Stack>
 
-      <Stack alignItems="flex-end" sx={{ my: 2 }}>
+      <Stack alignItems="flex-start" sx={{ my: 2 }}>
         <Link
           component={NextLink}
           href={PATH_AUTH.resetPassword}
@@ -95,28 +80,46 @@ export default function AuthLoginForm() {
           color="inherit"
           underline="always"
         >
-          Forgot password?
+          Forgot Email?
         </Link>
       </Stack>
-
-      <LoadingButton
-        fullWidth
-        color="inherit"
-        size="large"
-        type="submit"
-        variant="contained"
-        loading={isSubmitSuccessful || isSubmitting}
-        sx={{
-          bgcolor: 'text.primary',
-          color: (theme) => (theme.palette.mode === 'light' ? 'common.white' : 'grey.800'),
-          '&:hover': {
-            bgcolor: 'text.primary',
-            color: (theme) => (theme.palette.mode === 'light' ? 'common.white' : 'grey.800'),
-          },
-        }}
+      <Stack
+        direction="row"
+        spacing={0.5}
+        sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', my: 3 }}
       >
-        Login
-      </LoadingButton>
+        <Link
+          component={NextLink}
+          href={PATH_AUTH.register}
+          variant="subtitle2"
+          sx={{
+            color: 'rgb(59 130 246)',
+            '&:hover': {
+              bgcolor: 'rgb(239 246 255)',
+              color: 'rgb(29 78 216)',
+            },
+          }}
+        >
+          Create account
+        </Link>
+        <LoadingButton
+          color="inherit"
+          size="medium"
+          type="submit"
+          variant="contained"
+          loading={isSubmitSuccessful || isSubmitting}
+          sx={{
+            bgcolor: 'rgb(59 130 246)',
+            color: (theme) => (theme.palette.mode === 'light' ? 'common.white' : 'grey.800'),
+            '&:hover': {
+              bgcolor: 'text.default',
+              color: (theme) => (theme.palette.mode === 'light' ? 'common.white' : 'grey.800'),
+            },
+          }}
+        >
+          Next
+        </LoadingButton>
+      </Stack>
     </FormProvider>
   );
 }

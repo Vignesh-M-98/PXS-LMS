@@ -19,34 +19,28 @@ export default function Login() {
 
   return (
     <LoginLayout>
-      <Stack spacing={2} sx={{ mb: 5, position: 'relative' }}>
-        <Typography variant="h4">Sign in to Minimal</Typography>
-
-        <Stack direction="row" spacing={0.5}>
-          <Typography variant="body2">New user?</Typography>
-
-          <Link component={NextLink} href={PATH_AUTH.register} variant="subtitle2">
-            Create an account
-          </Link>
-        </Stack>
-
-        <Tooltip title={method} placement="left">
+      <Stack spacing={2} sx={{ mb: 5, position: 'relative', alignItems: 'center' }}>
+        <Tooltip title={method} placement="top">
           <Box
             component="img"
             alt={method}
             src={`/assets/icons/auth/ic_${method}.png`}
-            sx={{ width: 32, height: 32, position: 'absolute', right: 0 }}
+            sx={{ width: 32, height: 32, position: 'relative', right: 0 }}
           />
         </Tooltip>
+        <Typography variant='h3' align="center">
+          Sign in
+        </Typography>
+
+        <Stack direction="row">
+          <Typography variant="body1">Use your Google Account</Typography>
+        </Stack>
       </Stack>
 
-      <Alert severity="info" sx={{ mb: 3 }}>
+      {/* <Alert severity="info" sx={{ mb: 3 }}>
         Use email : <strong>demo@minimals.cc</strong> / password :<strong> demo1234</strong>
-      </Alert>
-
+      </Alert> */}
       <AuthLoginForm />
-
-      <AuthWithSocial />
     </LoginLayout>
   );
 }
