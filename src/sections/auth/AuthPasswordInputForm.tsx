@@ -24,7 +24,7 @@ type FormValuesProps = {
   afterSubmit?: string;
 };
 
-export default function AuthLoginForm() {
+export default function AuthPasswordInputForm() {
   const { login } = useAuthContext();
 
   const [showPassword, setShowPassword] = useState(false);
@@ -130,7 +130,7 @@ export default function AuthLoginForm() {
             },
           }}
         >
-          Next
+          Sign in
         </LoadingButton>
       </Stack>
     </FormProvider>
