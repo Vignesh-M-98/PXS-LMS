@@ -5,13 +5,13 @@ import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
-import { Stack, FormHelperText } from '@mui/material';
+import { Stack, FormHelperText, Link, Typography } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 // routes
 import { PATH_DASHBOARD } from '../../routes/paths';
 // components
 import { useSnackbar } from '../../components/snackbar';
-import FormProvider, { RHFCodes } from '../../components/hook-form';
+import FormProvider, { RHFCodes, RHFTextField } from '../../components/hook-form';
 
 // ----------------------------------------------------------------------
 
@@ -71,29 +71,46 @@ export default function AuthVerifyCodeForm() {
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
-      <Stack spacing={3}>
-        <RHFCodes keyName="code" inputs={['code1', 'code2', 'code3', 'code4', 'code5', 'code6']} />
+      <Stack spacing={3} sx={{ alignItems: 'center' }}>
+        <Typography variant="body2">
+          A text message with a 6 digit verification code was just sent to +91 977...777
+        </Typography>
 
-        {(!!errors.code1 ||
-          !!errors.code2 ||
-          !!errors.code3 ||
-          !!errors.code4 ||
-          !!errors.code5 ||
-          !!errors.code6) && (
-          <FormHelperText error sx={{ px: 2 }}>
-            Code is required
-          </FormHelperText>
-        )}
-
+        <RHFTextField name="Code" variant="outlined" label="Enter the code" type="number" />
+      </Stack>
+      <Stack
+        direction="row"
+        spacing={0.5}
+        sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', my: 3 }}
+      >
+        <Link
+          variant="subtitle2"
+          sx={{
+            color: 'rgb(59 130 246)',
+            '&:hover': {
+              bgcolor: 'rgb(239 246 255)',
+              color: 'rgb(29 78 216)',
+            },
+          }}
+        >
+          I don&#39;t have a phone
+        </Link>
         <LoadingButton
-          fullWidth
-          size="large"
+          color="inherit"
+          size="medium"
           type="submit"
           variant="contained"
           loading={isSubmitting}
-          sx={{ mt: 3 }}
+          sx={{
+            bgcolor: 'rgb(59 130 246)',
+            color: (theme) => (theme.palette.mode === 'light' ? 'common.white' : 'grey.800'),
+            '&:hover': {
+              bgcolor: 'text.default',
+              color: (theme) => (theme.palette.mode === 'light' ? 'common.white' : 'grey.800'),
+            },
+          }}
         >
-          Verify
+          Next
         </LoadingButton>
       </Stack>
     </FormProvider>
