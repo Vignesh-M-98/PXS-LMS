@@ -21,8 +21,8 @@ export default function FindYourEmail() {
           <Box
             component="img"
             alt={method}
-            src={`/assets/icons/auth/ic_${method}.png`}
-            sx={{ width: 32, height: 32, position: 'relative', right: 0 }}
+            src="/logo/PAXLogoMark.svg"
+            sx={{ width: 80, height: 80, position: 'relative', right: 0 }}
           />
         </Tooltip>
         <Typography variant="h3" align="center">
@@ -32,8 +32,8 @@ export default function FindYourEmail() {
         <Stack direction="row">
           <Typography variant="body1">Enter your phone number or recovery email</Typography>
         </Stack>
-          </Stack>
-          <AuthFindYourEmailInputForm/>
+      </Stack>
+      <AuthFindYourEmailInputForm />
     </LoginLayout>
   );
 }

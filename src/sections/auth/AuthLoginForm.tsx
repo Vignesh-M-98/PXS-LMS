@@ -2,30 +2,45 @@ import { useState } from 'react';
 import * as Yup from 'yup';
 // next
 import NextLink from 'next/link';
+import { signIn, getSession } from 'next-auth/react';
+
 // form
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
-import { Link, Stack, Alert, IconButton, InputAdornment } from '@mui/material';
+import { Link, Stack, Alert } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 // routes
 import { PATH_AUTH } from '../../routes/paths';
 // auth
-import { useAuthContext } from '../../auth/useAuthContext';
 // components
-import Iconify from '../../components/iconify';
 import FormProvider, { RHFTextField } from '../../components/hook-form';
 
 // ----------------------------------------------------------------------
 
 type FormValuesProps = {
-  email: string;
+  userName: string;
   password: string;
   afterSubmit?: string;
 };
 
 export default function AuthLoginForm() {
-  const { login } = useAuthContext();
+  // const { login } = useAuthContext();
+
+  const login = async (userName: string, password: string) => {
+    console.log('test');
+    await signIn('credentials', {
+      redirect: false,
+      userName,
+      password,
+    });
+
+    const session = await getSession();
+
+    if (!session) {
+      throw new Error('Login failed!');
+    }
+  };
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -35,8 +50,8 @@ export default function AuthLoginForm() {
   });
 
   const defaultValues = {
-    email: 'demo@minimals.cc',
-    password: 'demo1234',
+    userName: 'jDoe',
+    password: 'Hello123',
   };
 
   const methods = useForm<FormValuesProps>({
@@ -53,7 +68,7 @@ export default function AuthLoginForm() {
 
   const onSubmit = async (data: FormValuesProps) => {
     try {
-      await login(data.email, data.password);
+      await login(data.userName, data.password);
     } catch (error) {
       console.log(error);
       reset();
@@ -69,7 +84,7 @@ export default function AuthLoginForm() {
       <Stack spacing={3}>
         {!!errors.afterSubmit && <Alert severity="error">{errors.afterSubmit.message}</Alert>}
 
-        <RHFTextField name="email" label="Email address" />
+        <RHFTextField name="userName" label="User Name" />
       </Stack>
 
       <Stack alignItems="flex-start" sx={{ my: 2 }}>

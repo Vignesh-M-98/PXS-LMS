@@ -7,7 +7,7 @@ import { useAuthContext } from '../../auth/useAuthContext';
 import LoginLayout from '../../layouts/login';
 // routes
 //
-import AuthPasswordInputForm from './AuthPasswordInputForm';
+import AuthLoginForm from './AuthLoginForm';
 
 // ----------------------------------------------------------------------
 
@@ -21,11 +21,11 @@ export default function Login() {
           <Box
             component="img"
             alt={method}
-            src={`/assets/icons/auth/ic_${method}.png`}
-            sx={{ width: 32, height: 32, position: 'relative', right: 0 }}
+            src="/logo/PAXLogoMark.svg"
+            sx={{ width: 80, height: 80, position: 'relative', right: 0 }}
           />
         </Tooltip>
-        <Typography variant='h3' align="center">
+        <Typography variant="h3" align="center">
           Sign in
         </Typography>
 
@@ -33,7 +33,7 @@ export default function Login() {
           <Typography variant="body1">Use your Google Account</Typography>
         </Stack>
       </Stack>
-      <AuthPasswordInputForm />
+      <AuthLoginForm />
     </LoginLayout>
   );
 }

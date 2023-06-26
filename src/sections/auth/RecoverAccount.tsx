@@ -1,4 +1,5 @@
 // next
+import Image from 'next/image';
 // @mui
 import { Tooltip, Stack, Typography, Box, Avatar, Chip } from '@mui/material';
 // auth
@@ -23,19 +24,24 @@ export default function RecoverAccount() {
           <Box
             component="img"
             alt={method}
-            src={`/assets/icons/auth/ic_${method}.png`}
-            sx={{ width: 32, height: 32, position: 'relative', right: 0 }}
+            src="/logo/PAXLogoMark.svg"
+            sx={{ width: 80, height: 80, position: 'relative', right: 0 }}
           />
         </Tooltip>
         <Typography variant="h3" align="center">
           Account Recovery
         </Typography>
 
-              <Stack direction="column" spacing={2} sx={{}}>
+        <Stack direction="column" spacing={2} sx={{ alignItems: 'center' }}>
           <Typography variant="body1">
             This helps show that this account really belongs to you
           </Typography>
-          <Chip avatar={<Avatar>M</Avatar>} label="Avatar" size='medium'/>
+          <Chip
+            avatar={<Avatar>M</Avatar>}
+            label="email@domain.com"
+            size="medium"
+            sx={{ objectFit: 'fill' }}
+          />
         </Stack>
       </Stack>
       <AuthSecurityQuestionInputForm />
