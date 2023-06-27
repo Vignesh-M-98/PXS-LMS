@@ -75,7 +75,7 @@ export default function AuthSecurityQuestionInputForm() {
         <Typography variant="body2">Answer your security question</Typography>
 
         <RHFTextField
-          name="Code"
+          name="highSchoolName"
           variant="outlined"
           label="High School Name"
           type="text"
@@ -90,11 +90,13 @@ export default function AuthSecurityQuestionInputForm() {
         <Link
           variant="subtitle2"
           sx={{
-            color: 'rgb(59 130 246)',
+            color: 'secondary.main',
             '&:hover': {
-              bgcolor: 'rgb(239 246 255)',
-              color: 'rgb(29 78 216)',
+              bgcolor: 'secondary.lighter',
+              color: 'secondary.dark',
             },
+            borderRadius: '4px',
+            padding: '4px',
           }}
         >
           Try another way
@@ -106,7 +108,7 @@ export default function AuthSecurityQuestionInputForm() {
           variant="contained"
           loading={isSubmitting}
           sx={{
-            bgcolor: 'rgb(59 130 246)',
+            bgcolor: 'secondary.main',
             color: (theme) => (theme.palette.mode === 'light' ? 'common.white' : 'grey.800'),
             '&:hover': {
               bgcolor: 'text.default',

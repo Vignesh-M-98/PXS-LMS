@@ -11,6 +11,7 @@ import LoginLayout from '../../layouts/login';
 import AuthPasswordInputForm from './AuthPasswordInputForm';
 import AuthVerifyCodeForm from './AuthVerifyCodeForm';
 import AuthSecurityQuestionInputForm from './AuthSecurityQuestionInputForm';
+import AuthConfirmPasswordInputForm from './AuthConfirmPasswordInputForm';
 
 // ----------------------------------------------------------------------
 
@@ -44,7 +45,7 @@ export default function RecoverAccount() {
           />
         </Stack>
       </Stack>
-      <AuthSecurityQuestionInputForm />
+      <AuthConfirmPasswordInputForm />
     </LoginLayout>
   );
 }

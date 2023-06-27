@@ -24,7 +24,7 @@ type FormValuesProps = {
   code6: string;
 };
 
-export default function AuthVerifyCodeForm() {
+export default function AuthConfirmPasswordInputForm() {
   const { push } = useRouter();
 
   const { enqueueSnackbar } = useSnackbar();
@@ -71,32 +71,25 @@ export default function AuthVerifyCodeForm() {
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
-      <Stack spacing={3} sx={{ alignItems: 'center' }}>
-        <Typography variant="body2">
-          A text message with a 6 digit verification code was just sent to +91 977...777
+      <Stack spacing={2}>
+        <Typography variant="body2">Create a strong password</Typography>
+        <Typography variant="body2" sx={{ wordWrap: 'break-word', alignItems: 'center' }}>
+          Create a new strong password that you don&#39;t use for other websites.
         </Typography>
 
-        <RHFTextField name="Code" variant="outlined" label="Enter the code" type="number" />
+        <RHFTextField name="password" variant="outlined" label="Password" type="text" />
+        <RHFTextField
+          name="confirmPassword"
+          variant="outlined"
+          label="Confirm Password"
+          type="text"
+        />
       </Stack>
       <Stack
         direction="row"
         spacing={0.5}
-        sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', my: 3 }}
+        sx={{ display: 'flex', justifyContent: 'flex-end', my: 3 }}
       >
-        <Link
-          variant="subtitle2"
-          sx={{
-            color: 'secondary.main',
-            '&:hover': {
-              bgcolor: 'secondary.lighter',
-              color: 'secondary.dark',
-            },
-            borderRadius: '4px',
-            padding: '4px',
-          }}
-        >
-          I don&#39;t have a phone
-        </Link>
         <LoadingButton
           color="inherit"
           size="medium"

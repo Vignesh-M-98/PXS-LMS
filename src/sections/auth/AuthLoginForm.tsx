@@ -108,10 +108,10 @@ export default function AuthLoginForm() {
           href={PATH_AUTH.register}
           variant="subtitle2"
           sx={{
-            color: 'rgb(59 130 246)',
+            color: 'secondary.main',
             '&:hover': {
               bgcolor: 'rgb(239 246 255)',
-              color: 'rgb(29 78 216)',
+              color: 'secondary.dark',
             },
           }}
         >
@@ -124,7 +124,7 @@ export default function AuthLoginForm() {
           variant="contained"
           loading={isSubmitSuccessful || isSubmitting}
           sx={{
-            bgcolor: 'rgb(59 130 246)',
+            bgcolor: 'secondary.main',
             color: (theme) => (theme.palette.mode === 'light' ? 'common.white' : 'grey.800'),
             '&:hover': {
               bgcolor: 'text.default',

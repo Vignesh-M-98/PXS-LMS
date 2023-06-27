@@ -78,7 +78,7 @@ export default function AuthFindYourEmailInputForm() {
           variant="contained"
           loading={isSubmitSuccessful || isSubmitting}
           sx={{
-            bgcolor: 'rgb(59 130 246)',
+            bgcolor: 'secondary.main',
             color: (theme) => (theme.palette.mode === 'light' ? 'common.white' : 'grey.800'),
             '&:hover': {
               bgcolor: 'text.default',
