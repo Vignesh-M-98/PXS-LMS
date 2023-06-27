@@ -30,7 +30,6 @@ type FormValuesProps = {
 export default function AuthLoginForm() {
   // const { login } = useAuthContext();
 
-  const router = useRouter();
   const contextValue = useContext(StepContext);
   const emailValue = useContext(LoginAuthContext);
 

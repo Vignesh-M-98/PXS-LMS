@@ -9,7 +9,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
 import { Link, Stack, Alert, IconButton, InputAdornment } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
-import StepContext, { StepContextType } from 'src/context/stepContext';
+import StepContext from 'src/context/stepContext';
 import { LoginAuthContext } from 'src/context/LoginAuthContext';
 import { loginUser } from 'src/services/authService';
 
@@ -32,6 +32,10 @@ export default function AuthPasswordInputForm() {
   // const { login } = useAuthContext();
   const contextValue = useContext(StepContext);
   const emailValue = useContext(LoginAuthContext);
+
+  if (!contextValue) {
+    throw new Error('EmailForm must be used within a StepContextProvider');
+  }
 
   const [showPassword, setShowPassword] = useState(false);
 
