@@ -1,50 +1,49 @@
 // next
-import NextLink from 'next/link';
 // @mui
-import { Stack, Typography, Link } from '@mui/material';
+import { Tooltip, Stack, Typography, Box } from '@mui/material';
+import { useMemo, useState } from 'react';
+import StepContext from 'src/context/stepContext';
+
+// auth
+import { useAuthContext } from '../../auth/useAuthContext';
 // layouts
 import LoginLayout from '../../layouts/login';
-// routes
-import { PATH_AUTH } from '../../routes/paths';
-//
-import AuthWithSocial from './AuthWithSocial';
-import AuthRegisterForm from './AuthRegisterForm';
 
+// routes
+//
+import AuthLoginForm from './AuthLoginForm';
+import AuthPasswordInputForm from './AuthPasswordInputForm';
+import AuthRegisterNameInputForm from './AuthRegisterNameInputForm';
 // ----------------------------------------------------------------------
 
-export default function Register() {
+export default function Login() {
+  const { method } = useAuthContext();
+  const [step, setStep] = useState(1);
+  const value = useMemo(() => ({ step, setStep }), [step]);
+
   return (
     <LoginLayout>
-      <Stack spacing={2} sx={{ mb: 5, position: 'relative' }}>
-        <Typography variant="h4">Get started absolutely free.</Typography>
+      <Stack spacing={2} sx={{ mb: 5, position: 'relative', alignItems: 'center' }}>
+        <Tooltip title={method} placement="top">
+          <Box
+            component="img"
+            alt={method}
+            src="/logo/PAXLogoMark.svg"
+            sx={{ width: 80, height: 80, position: 'relative', right: 0 }}
+          />
+        </Tooltip>
+        <Typography variant="h3" align="center">
+          Register
+        </Typography>
 
-        <Stack direction="row" spacing={0.5}>
-          <Typography variant="body2"> Already have an account? </Typography>
-
-          <Link component={NextLink} href={PATH_AUTH.login} variant="subtitle2">
-            Sign in
-          </Link>
+        <Stack direction="row">
+          <Typography variant="body1">Create your PAX Account</Typography>
         </Stack>
       </Stack>
-
-      <AuthRegisterForm />
-
-      <Typography
-        component="div"
-        sx={{ color: 'text.secondary', mt: 3, typography: 'caption', textAlign: 'center' }}
-      >
-        {'By signing up, I agree to '}
-        <Link underline="always" color="text.primary">
-          Terms of Service
-        </Link>
-        {' and '}
-        <Link underline="always" color="text.primary">
-          Privacy Policy
-        </Link>
-        .
-      </Typography>
-
-      <AuthWithSocial />
+      <StepContext.Provider value={value}>
+        {step === 1 && <AuthRegisterNameInputForm />}
+        {step === 2 && <AuthPasswordInputForm />}
+      </StepContext.Provider>
     </LoginLayout>
   );
 }
