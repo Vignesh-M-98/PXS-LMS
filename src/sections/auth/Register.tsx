@@ -42,7 +42,6 @@ export default function Login() {
       </Stack>
       <StepContext.Provider value={value}>
         {step === 1 && <AuthRegisterNameInputForm />}
-        {step === 2 && <AuthPasswordInputForm />}
       </StepContext.Provider>
     </LoginLayout>
   );
