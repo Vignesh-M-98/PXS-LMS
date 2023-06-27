@@ -29,6 +29,7 @@ import { CacheProvider, EmotionCache } from '@emotion/react';
 import { NextPage } from 'next';
 import Head from 'next/head';
 import { AppProps } from 'next/app';
+import LoginAuthProvider from 'src/context/LoginAuthProvider';
 // redux
 import { Provider as ReduxProvider } from 'react-redux';
 // @mui
@@ -82,25 +83,27 @@ export default function MyApp(props: MyAppProps) {
       </Head>
 
       <AuthProvider>
-        <ReduxProvider store={store}>
-          <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <SettingsProvider>
-              <MotionLazyContainer>
-                <ThemeProvider>
-                  <ThemeSettings>
-                    <ThemeLocalization>
-                      <SnackbarProvider>
-                        <StyledChart />
-                        <ProgressBar />
-                        {getLayout(<Component {...pageProps} />)}
-                      </SnackbarProvider>
-                    </ThemeLocalization>
-                  </ThemeSettings>
-                </ThemeProvider>
-              </MotionLazyContainer>
-            </SettingsProvider>
-          </LocalizationProvider>
-        </ReduxProvider>
+        <LoginAuthProvider>
+          <ReduxProvider store={store}>
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <SettingsProvider>
+                <MotionLazyContainer>
+                  <ThemeProvider>
+                    <ThemeSettings>
+                      <ThemeLocalization>
+                        <SnackbarProvider>
+                          <StyledChart />
+                          <ProgressBar />
+                          {getLayout(<Component {...pageProps} />)}
+                        </SnackbarProvider>
+                      </ThemeLocalization>
+                    </ThemeSettings>
+                  </ThemeProvider>
+                </MotionLazyContainer>
+              </SettingsProvider>
+            </LocalizationProvider>
+          </ReduxProvider>
+        </LoginAuthProvider>
       </AuthProvider>
     </CacheProvider>
   );

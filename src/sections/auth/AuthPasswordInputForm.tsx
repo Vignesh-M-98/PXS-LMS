@@ -1,17 +1,21 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import * as Yup from 'yup';
 // next
 import NextLink from 'next/link';
+import router from 'next/router';
 // form
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
 import { Link, Stack, Alert, IconButton, InputAdornment } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
+import StepContext, { StepContextType } from 'src/context/stepContext';
+import { LoginAuthContext } from 'src/context/LoginAuthContext';
+import { loginUser } from 'src/services/authService';
+
 // routes
 import { PATH_AUTH } from '../../routes/paths';
 // auth
-import { useAuthContext } from '../../auth/useAuthContext';
 // components
 import Iconify from '../../components/iconify';
 import FormProvider, { RHFTextField } from '../../components/hook-form';
@@ -25,18 +29,22 @@ type FormValuesProps = {
 };
 
 export default function AuthPasswordInputForm() {
-  const { login } = useAuthContext();
+  // const { login } = useAuthContext();
+  const contextValue = useContext(StepContext);
+  const emailValue = useContext(LoginAuthContext);
 
   const [showPassword, setShowPassword] = useState(false);
 
+  const { email } = emailValue;
+  const { setStep } = contextValue;
   const LoginSchema = Yup.object().shape({
-    email: Yup.string().required('Email is required').email('Email must be a valid email address'),
+    // email: Yup.string().required('Email is required').email('Email must be a valid email address'),
     password: Yup.string().required('Password is required'),
   });
 
   const defaultValues = {
-    email: 'demo@minimals.cc',
-    password: 'demo1234',
+    // email: 'demo@minimals.cc',
+    password: '',
   };
 
   const methods = useForm<FormValuesProps>({
@@ -53,10 +61,14 @@ export default function AuthPasswordInputForm() {
 
   const onSubmit = async (data: FormValuesProps) => {
     try {
-      await login(data.email, data.password);
+      const response = await loginUser(email, data.password);
+
+      if (response.status === 200) {
+        router.push('/dashboard');
+      }
     } catch (error) {
       console.log(error);
-      reset();
+      // reset();
       setError('afterSubmit', {
         ...error,
         message: error.message || error,
@@ -103,8 +115,11 @@ export default function AuthPasswordInputForm() {
       >
         <Link
           component={NextLink}
-          href={PATH_AUTH.register}
+          href=""
           variant="subtitle2"
+          onClick={() => {
+            setStep(1);
+          }}
           sx={{
             color: 'secondary.main',
             '&:hover': {
@@ -113,7 +128,7 @@ export default function AuthPasswordInputForm() {
             },
           }}
         >
-          Create account
+          Go Back
         </Link>
         <LoadingButton
           color="inherit"

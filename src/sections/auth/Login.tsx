@@ -1,18 +1,24 @@
 // next
 // @mui
 import { Tooltip, Stack, Typography, Box } from '@mui/material';
+import { useMemo, useState } from 'react';
+import StepContext from 'src/context/stepContext';
+
 // auth
 import { useAuthContext } from '../../auth/useAuthContext';
 // layouts
 import LoginLayout from '../../layouts/login';
+
 // routes
 //
 import AuthLoginForm from './AuthLoginForm';
-
+import AuthPasswordInputForm from './AuthPasswordInputForm';
 // ----------------------------------------------------------------------
 
 export default function Login() {
   const { method } = useAuthContext();
+  const [step, setStep] = useState(1);
+  const value = useMemo(() => ({ step, setStep }), [step]);
 
   return (
     <LoginLayout>
@@ -33,7 +39,10 @@ export default function Login() {
           <Typography variant="body1">Use your Google Account</Typography>
         </Stack>
       </Stack>
-      <AuthLoginForm />
+      <StepContext.Provider value={value}>
+        {step === 1 && <AuthLoginForm />}
+        {step === 2 && <AuthPasswordInputForm />}
+      </StepContext.Provider>
     </LoginLayout>
   );
 }

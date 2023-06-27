@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import * as Yup from 'yup';
 // next
 import NextLink from 'next/link';
@@ -10,6 +10,9 @@ import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
 import { Link, Stack, Alert } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
+import { useRouter } from 'next/router';
+import StepContext from 'src/context/stepContext';
+import { LoginAuthContext } from 'src/context/LoginAuthContext';
 // routes
 import { PATH_AUTH } from '../../routes/paths';
 // auth
@@ -27,31 +30,42 @@ type FormValuesProps = {
 export default function AuthLoginForm() {
   // const { login } = useAuthContext();
 
-  const login = async (userName: string, password: string) => {
-    console.log('test');
-    await signIn('credentials', {
-      redirect: false,
-      userName,
-      password,
-    });
+  const router = useRouter();
+  const contextValue = useContext(StepContext);
+  const emailValue = useContext(LoginAuthContext);
 
-    const session = await getSession();
+  if (!contextValue) {
+    throw new Error('EmailForm must be used within a StepContextProvider');
+  }
 
-    if (!session) {
-      throw new Error('Login failed!');
-    }
-  };
+  const { setStep } = contextValue;
+  const { setEmail } = emailValue;
 
-  const [showPassword, setShowPassword] = useState(false);
+  // const login = async (userName: string, password: string) => {
+  //   console.log('test');
+  //   await signIn('credentials', {
+  //     redirect: false,
+  //     userName,
+  //     password,
+  //   });
+
+  //   const session = await getSession();
+
+  //   if (!session) {
+  //     throw new Error('Login failed!');
+  //   }
+  // };
+
+  // const [showPassword, setShowPassword] = useState(false);
 
   const LoginSchema = Yup.object().shape({
-    email: Yup.string().required('Email is required').email('Email must be a valid email address'),
-    password: Yup.string().required('Password is required'),
+    userName: Yup.string().required('Username is required'),
+    // password: Yup.string().required('Password is required'),
   });
 
   const defaultValues = {
     userName: 'jDoe',
-    password: 'Hello123',
+    // password: 'Hello123',
   };
 
   const methods = useForm<FormValuesProps>({
@@ -66,21 +80,27 @@ export default function AuthLoginForm() {
     formState: { errors, isSubmitting, isSubmitSuccessful },
   } = methods;
 
-  const onSubmit = async (data: FormValuesProps) => {
-    try {
-      await login(data.userName, data.password);
-    } catch (error) {
-      console.log(error);
-      reset();
-      setError('afterSubmit', {
-        ...error,
-        message: error.message || error,
-      });
-    }
+  const handleNext = (data: FormValuesProps) => {
+    // router.push(`/page-two?email=${email}`);
+    setEmail(data.userName);
+    setStep(2);
   };
 
+  // const onSubmit = async (data: FormValuesProps) => {
+  //   try {
+  //     await login(data.userName, data.password);
+  //   } catch (error) {
+  //     console.log(error);
+  //     reset();
+  //     setError('afterSubmit', {
+  //       ...error,
+  //       message: error.message || error,
+  //     });
+  //   }
+  // };
+
   return (
-    <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
+    <FormProvider methods={methods} onSubmit={handleSubmit(handleNext)}>
       <Stack spacing={3}>
         {!!errors.afterSubmit && <Alert severity="error">{errors.afterSubmit.message}</Alert>}
 
